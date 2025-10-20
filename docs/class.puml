@@ -1,0 +1,53 @@
+classDiagram
+    title UML Діаграма класів: Архітектор, Замовник, Інженер
+
+    %% Інтерфейс
+    class IReviewer {
+        +reviewModel()
+    }
+
+    %% Базовий клас
+    class User {
+        +String id
+        +String name
+        +void login()
+    }
+
+    %% Класи
+    class Architect {
+        +Architect(id:String, name:String)
+        +publishModel()
+        +releaseUpdate()
+    }
+
+    class Customer {
+        +Customer(id:String, name:String)
+        +commentConcept()
+        +approveConcept()
+    }
+
+    class Engineer {
+        +Engineer(id:String, name:String)
+        +checkConflicts()
+        +sendRequest()
+    }
+
+    class Model {
+        +String modelId
+        +int version
+        +view()
+    }
+
+    %% Наслідування (User -> підкласи)
+    User <|-- Architect
+    User <|-- Customer
+    User <|-- Engineer
+
+    %% Реалізація інтерфейсу (implements)
+    Architect ..|> IReviewer
+    Engineer ..|> IReviewer
+
+    %% Агрегація / Композиція / Залежність
+    Engineer o-- Model : "агрегація"
+    Architect *-- Model : "композиція"
+    Architect ..> Customer : "залежність"

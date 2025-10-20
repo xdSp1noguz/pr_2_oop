@@ -1,0 +1,38 @@
+%%{init: {"theme": "default"}}%%
+classDiagram
+    title UML: Use Cases — BIM Collaboration
+
+    class Architect {
+        +Будівельний\nархітектор
+    }
+    class Customer {
+        +Замовник
+    }
+    class Engineer {
+        +Інженер
+    }
+
+    class BIM_Collaboration_System {
+        +Публікує 3D-модель для перегляду
+        +Випускає оновлену версію моделі
+        +Сповіщення зацікавлених
+        +Завантажити файл моделі
+        +Затверджує концепт
+        +Коментує модель та подає відгуки
+        +Перевіряє конфлікти у моделі
+        +Надсилає запит на уточнення
+    }
+
+    Architect --> BIM_Collaboration_System : Публікує 3D-модель для перегляду
+    Architect --> BIM_Collaboration_System : Завантажити файл моделі
+    Architect ..> BIM_Collaboration_System : ініціює Випускає оновлену версію моделі
+
+    Customer --> BIM_Collaboration_System : Затверджує концепт
+    Customer --> BIM_Collaboration_System : Коментує модель та подає відгуки
+
+    Engineer --> BIM_Collaboration_System : Перевіряє конфлікти у моделі
+    Engineer --> BIM_Collaboration_System : Надсилає запит на уточнення
+
+    BIM_Collaboration_System --> Статус_Сповіщення : <<include>> Сповіщення зацікавлених
+    BIM_Collaboration_System --> Статус_Завантаження : <<include>> Завантажити файл моделі
+    BIM_Collaboration_System --> Статус_Запит : <<include>> Надсилає запит на уточнення
