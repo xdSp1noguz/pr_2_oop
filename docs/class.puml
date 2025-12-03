@@ -1,53 +1,56 @@
-classDiagram
-    title UML Діаграма класів: Архітектор, Замовник, Інженер
+@startuml
+title Диаграмма классов (Architecture - Setter Injection)
 
-    %% Інтерфейс
-    class IReviewer {
-        +reviewModel()
-    }
+class User {
+    - String id
+    - String name
+    + User(String id, String name)
+    + login()
+    + getName(): String
+}
 
-    %% Базовий клас
-    class User {
-        +String id
-        +String name
-        +void login()
-    }
+interface IReviewer {
+    + reviewModel()
+}
 
-    %% Класи
-    class Architect {
-        +Architect(id:String, name:String)
-        +publishModel()
-        +releaseUpdate()
-    }
+class Architect {
+    - Model currentModel
+    + Architect(String id, String name)
+    + publishModel()
+    + releaseUpdate()
+    + setCurrentModel(Model model)
+    + login()
+}
 
-    class Customer {
-        +Customer(id:String, name:String)
-        +commentConcept()
-        +approveConcept()
-    }
+class BIMCollaboration {
+    - ArchitectureService dbService
+    + setArchitectureService(ArchitectureService dbService)
+    + startDemo()
+}
 
-    class Engineer {
-        +Engineer(id:String, name:String)
-        +checkConflicts()
-        +sendRequest()
-    }
+class ArchitectureService {
+    - Connection connection
+    + saveModelInfo(String description)
+    + logAction(String action, String details)
+}
 
-    class Model {
-        +String modelId
-        +int version
-        +view()
-    }
+class ArchitectureModule {
+    + configure()
+    + provideConnection(): Connection
+}
 
-    %% Наслідування (User -> підкласи)
-    User <|-- Architect
-    User <|-- Customer
-    User <|-- Engineer
+class Model {
+    - String name
+    - int version
+    + view()
+    + toString(): String
+}
 
-    %% Реалізація інтерфейсу (implements)
-    Architect ..|> IReviewer
-    Engineer ..|> IReviewer
-
-    %% Агрегація / Композиція / Залежність
-    Engineer o-- Model : "агрегація"
-    Architect *-- Model : "композиція"
-    Architect ..> Customer : "залежність"
+Architect --|> User
+Architect ..|> IReviewer
+BIMCollaboration ..> ArchitectureService : uses (via Setter @Inject)
+BIMCollaboration ..> Architect
+BIMCollaboration ..> Model
+ArchitectureModule ..> ArchitectureService
+Architect --> Model
+@enduml

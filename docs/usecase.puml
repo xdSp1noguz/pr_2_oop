@@ -1,38 +1,32 @@
-%%{init: {"theme": "default"}}%%
-classDiagram
-    title UML: Use Cases — BIM Collaboration
+@startuml
+title Діаграма прецедентів (BIM Collaboration)
+left to right direction
 
-    class Architect {
-        +Будівельний\nархітектор
-    }
-    class Customer {
-        +Замовник
-    }
-    class Engineer {
-        +Інженер
-    }
+actor "Архітектор" as Architect
+actor "Замовник" as Customer
+actor "Інженер" as Engineer
 
-    class BIM_Collaboration_System {
-        +Публікує 3D-модель для перегляду
-        +Випускає оновлену версію моделі
-        +Сповіщення зацікавлених
-        +Завантажити файл моделі
-        +Затверджує концепт
-        +Коментує модель та подає відгуки
-        +Перевіряє конфлікти у моделі
-        +Надсилає запит на уточнення
-    }
+rectangle "Система BIM Співпраці" {
+  usecase "Публікація 3D-моделі" as UC1
+  usecase "Випуск оновленої версії" as UC2
+  usecase "Завантаження файлу моделі" as UC3
+  usecase "Перегляд моделі" as UC4
+  usecase "Коментування моделі" as UC5
+  usecase "Затвердження концепту" as UC6
+  usecase "Перевірка конфліктів" as UC7
+  usecase "Надсилання запиту на уточнення" as UC8
+  usecase "Сповіщення зацікавлених" as UC9
+}
 
-    Architect --> BIM_Collaboration_System : Публікує 3D-модель для перегляду
-    Architect --> BIM_Collaboration_System : Завантажити файл моделі
-    Architect ..> BIM_Collaboration_System : ініціює Випускає оновлену версію моделі
+Architect --> UC1
+Architect --> UC2
+Architect --> UC3
 
-    Customer --> BIM_Collaboration_System : Затверджує концепт
-    Customer --> BIM_Collaboration_System : Коментує модель та подає відгуки
+Customer --> UC4
+Customer --> UC5
+Customer --> UC6
 
-    Engineer --> BIM_Collaboration_System : Перевіряє конфлікти у моделі
-    Engineer --> BIM_Collaboration_System : Надсилає запит на уточнення
-
-    BIM_Collaboration_System --> Статус_Сповіщення : <<include>> Сповіщення зацікавлених
-    BIM_Collaboration_System --> Статус_Завантаження : <<include>> Завантажити файл моделі
-    BIM_Collaboration_System --> Статус_Запит : <<include>> Надсилає запит на уточнення
+Engineer --> UC4
+Engineer --> UC7
+Engineer --> UC8
+@enduml
