@@ -3,57 +3,62 @@ package com.architecture;
 import com.google.inject.Inject;
 
 /**
- * Класс для управления процессом (теперь управляется через Guice)
+ * Клас для управління процесом (Setter Injection)
  */
 public class BIMCollaboration {
     
-    // Поле для сервиса базы данных
-    private final ArchitectureService dbService;
+    // 1. Прибираємо 'final', оскільки ініціалізація буде пізніше через сетер
+    private ArchitectureService dbService;
 
-    // Внедряем зависимость через конструктор (@Inject)
+    // 2. Коментуємо конструктор (Constructor Injection більше не використовується)
+    /*
     @Inject
     public BIMCollaboration(ArchitectureService dbService) {
         this.dbService = dbService;
     }
+    */
 
-    // Это больше не static main, а обычный метод запуска
+    // 3. Додаємо Setter-метод для впровадження залежності
+    @Inject
+    public void setArchitectureService(ArchitectureService dbService) {
+        this.dbService = dbService;
+    }
+
     public void startDemo() {
-        // --- Ваш код создания объектов ---
+        // --- Перевірка, чи залежність впровадилась ---
+        if (dbService == null) {
+            System.err.println("ПОМИЛКА: Сервіс бази даних не ініціалізовано!");
+            return;
+        }
+
         Architect architect = new Architect("A1", "Іван Петренко");
         Customer customer = new Customer("C1", "Марія Коваленко");
         Engineer engineer = new Engineer("E1", "Петро Сидоренко");
 
-        // Створення моделі
         Model model = new Model("M1", 1);
         architect.setCurrentModel(model);
         engineer.setModel(model);
 
-        // --- Сохраняем информацию в БД (Новая часть) ---
-        dbService.logAction("Создание модели", "Модель M1 (ver 1) создана");
+        // Використовуємо сервіс
+        dbService.logAction("Setter Injection", "Успішно використано сетер для збереження");
 
-        // Демонстрація процесу співпраці
         System.out.println("=== Початок демонстрації ===");
         
-        // Вхід користувачів в систему
         architect.login();
         customer.login();
         engineer.login();
 
-        // Публікація моделі архітектором
         architect.publishModel();
         dbService.logAction("Публикация", "Архитектор опубликовал модель");
         
-        // Рецензування моделі
         customer.commentConcept();
         engineer.reviewModel();
         engineer.checkConflicts();
         engineer.sendRequest();
         
-        // Оновлення моделі
         architect.releaseUpdate();
         dbService.logAction("Обновление", "Выпущено обновление модели");
         
-        // Затвердження концепту
         customer.approveConcept();
 
         System.out.println("=== Кінець демонстрації ===");
