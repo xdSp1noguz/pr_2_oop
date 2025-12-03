@@ -11,19 +11,20 @@ public class BIMCollaboration {
     private ArchitectureService dbService;
 
     // 2. Коментуємо конструктор (Constructor Injection більше не використовується)
-    /*
+    
     @Inject
     public BIMCollaboration(ArchitectureService dbService) {
         this.dbService = dbService;
     }
-    */
+    
 
     // 3. Додаємо Setter-метод для впровадження залежності
+    /*
     @Inject
     public void setArchitectureService(ArchitectureService dbService) {
         this.dbService = dbService;
     }
-
+    */
     public void startDemo() {
         // --- Перевірка, чи залежність впровадилась ---
         if (dbService == null) {
