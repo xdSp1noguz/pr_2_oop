@@ -1,5 +1,10 @@
 package com.architecture;
 
+// --- Додані імпорти для веб-сервера ---
+import com.architecture.webserver.JavalinWebServer;
+import com.architecture.webserver.WebServer;
+// ---------------------------------------
+
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
@@ -20,6 +25,14 @@ public class ArchitectureModule extends AbstractModule {
             .toInstance("jdbc:sqlite:target/architecture.db");
     }
 
+    // --- НОВИЙ МЕТОД: Впровадження веб-сервера ---
+    @Provides
+    @Singleton
+    WebServer provideWebServer() {
+        return new JavalinWebServer();
+    }
+    // ---------------------------------------------
+
     @Provides
     @Singleton
     Connection provideConnection(@Named("JDBC URL") String url) {
@@ -33,7 +46,6 @@ public class ArchitectureModule extends AbstractModule {
     }
 
     private void createTableIfNotExists(Connection connection) {
-        // Создаем таблицу для сохранения моделей
         String sql = "CREATE TABLE IF NOT EXISTS project_logs (" +
                      "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                      "action TEXT NOT NULL, " +

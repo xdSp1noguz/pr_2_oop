@@ -1,26 +1,27 @@
 package com.architecture;
 
-/**
- * Клас для представлення 3D-моделі
- */
 public class Model {
-    private String modelId;
+    private String modelid;
     private int version;
 
-    /**
-     * Конструктор класу Model
-     * @param modelId Ідентифікатор моделі
-     * @param version Версія моделі
-     */
-    public Model(String modelId, int version) {
-        this.modelId = modelId;
+    // Порожній конструктор (важливий для Jackson/JSON)
+    public Model() {}
+
+    public Model(String modelid, int version) {
+        this.modelid = modelid;
         this.version = version;
     }
 
-    /**
-     * Метод для перегляду моделі
-     */
+    public String getModelid() { return modelid; }
+    public int getVersion() { return version; }
+
+    // Метод для відображення в консолі
     public void view() {
-        System.out.println("Перегляд моделі " + modelId + " (версія " + version + ")");
+        System.out.println("Displaying Model: " + modelid + " v." + version);
+    }
+    
+    @Override
+    public String toString() {
+        return "Model{id='" + modelid + "', version=" + version + "}";
     }
 }

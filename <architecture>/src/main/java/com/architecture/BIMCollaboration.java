@@ -49,7 +49,7 @@ public class BIMCollaboration {
         engineer.login();
 
         architect.publishModel();
-        dbService.logAction("Публикация", "Архитектор опубликовал модель");
+        dbService.logAction("Публікація", "Архітектор опублікував модель");
         
         customer.commentConcept();
         engineer.reviewModel();
@@ -57,7 +57,7 @@ public class BIMCollaboration {
         engineer.sendRequest();
         
         architect.releaseUpdate();
-        dbService.logAction("Обновление", "Выпущено обновление модели");
+        dbService.logAction("Оновлення", "Випущено оновлення моделі");
         
         customer.approveConcept();
 
