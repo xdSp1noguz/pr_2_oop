@@ -1,0 +1,43 @@
+@startuml
+title Діаграма класів MVC (Architecture System)
+
+package "View (Вигляд)" {
+    class ArchitectWebView {
+        - WebServer webServer
+        - ArchitectController controller
+        + start(int port)
+    }
+    interface WebServer {
+        + start(int port): Javalin
+    }
+    class JavalinWebServer {
+        + start(int port): Javalin
+    }
+}
+
+package "Controller (Контролер)" {
+    class ArchitectController {
+        - ArchitectureService service
+        + getAllModels(): List<Model>
+    }
+}
+
+package "Model (Модель)" {
+    class Model {
+        - String modelid
+        - int version
+        + getModelid()
+        + getVersion()
+    }
+    class ArchitectureService {
+        - Connection connection
+        + getAllModels(): List<Model>
+    }
+}
+
+ArchitectWebView --> WebServer : використовує
+ArchitectWebView --> ArchitectController : запитує дані
+ArchitectController --> ArchitectureService : викликає бізнес-логіку
+ArchitectureService --> Model : створює список
+JavalinWebServer ..|> WebServer : реалізує
+@enduml

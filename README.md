@@ -66,3 +66,14 @@ java -cp build BIMCollaboration
    - Liskov Substitution Principle: підкласи можуть замінювати базовий клас
    - Interface Segregation: інтерфейс містить тільки необхідні методи
    - Dependency Inversion: залежність від абстракцій, а не від реалізацій
+
+   
+   ### Компоненти MVC:
+* **Model**: `Model.java` (дані), `ArchitectureService.java` (логіка роботи з БД).
+* **View**: `ArchitectWebView.java` (налаштування API), `index.html` + `script.js` (веб-сторінка).
+* **Controller**: `ArchitectController.java` (обробка запитів між View та Model).
+
+### Запуск:
+1. `mvn clean install`
+2. `mvn exec:java -Dexec.mainClass="com.architecture.Architect"`
+3. Відкрити `index.html` через Live Server (попередньо налаштувавши API URL).
