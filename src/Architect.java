@@ -42,4 +42,20 @@ public class Architect extends User implements IReviewer {
     public void setCurrentModel(Model model) {
         this.currentModel = model;
     }
+
+    /**
+     * Повертає ім'я архітектора
+     * @return Ім'я архітектора
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Повертає ідентифікатор архітектора
+     * @return Ідентифікатор архітектора
+     */
+    public String getId() {
+        return id;
+    }
 }
